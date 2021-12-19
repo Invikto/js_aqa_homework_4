@@ -12,6 +12,35 @@ exports.config = {
         browserName: 'chrome',
         pageLoadStrategy: 'eager',
         acceptInsecureCerts: true
+    },
+    {
+        'bstack:options': {
+            os: 'Windows',
+            osVersion: '11',
+            local: false,
+            seleniumVersion: '3.10.0',
+        },
+        browserName: "Firefox",
+        browserVersion: "latest"
+    },
+    {
+        'bstack:options': {
+            os: 'OS X',
+            osVersion: 'Monterey',
+            local: false,
+            seleniumVersion: '3.5.2',
+        },
+        browserName: 'Edge',
+        browserVersion: 'latest'
+    },
+    {
+        'bstack:options': {
+            osVersion: '15',
+            deviceName: 'iPhone XS',
+            realMobile: true,
+            local: false,
+        },
+        browserName: 'iPhone'
     }],
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'warn',
@@ -20,7 +49,9 @@ exports.config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    services: ['chromedriver'],
+    user: 'arthurkuznetsov_Pisgqv',
+    key: 'xUsQ3AJg7QqS1vDP6gkn',
+    services: ['chromedriver', 'browserstack'],
 
     framework: 'mocha',
     cucumberOpts: {
@@ -80,8 +111,10 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function (config, capabilities) {
+        const fsExtra = require('fs-extra');
+        fsExtra.emptyDirSync('./screenshots');
+    },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -155,10 +188,14 @@ exports.config = {
     afterTest: async function (test, context, { error, result, duration, passed, retries }) {
         if (!passed) {
             await browser.takeScreenshot();
+            const currentDate = new Date().toISOString();
+            const testName = test.title.replace(/\s/g, '_');
+            const filename = `${currentDate}_${testName}`;
+            await browser.saveScreenshot(`./screenshots/${filename}.png`);
         }
     },
 
-    afterScenario: async ()=>{
+    afterScenario: async () => {
         await browser.reloadSession();
     },
 
