@@ -15,7 +15,7 @@ describe('Week leaders sorting', async function () {
 
   context('Column "Id"', async function () {
 
-    it('Ascending order', async function () {
+    it(`Ascending order (browser — ${browser.capabilities.browserName})`, async function () {
       const idColumn = await $('//*[@role="columnheader" and .//*[contains(text(), "Id")]]');
       await idColumn.waitForClickable({ timeout: 5000, reverse: false });
       await idColumn.click();
@@ -32,7 +32,7 @@ describe('Week leaders sorting', async function () {
       expect(ids).toEqual(ascSortedIds);
     });
 
-    it('Descending order', async function () {
+    it(`Descending order (browser — ${browser.capabilities.browserName})`, async function () {
       const idColumn = await $('//*[@role="columnheader" and .//*[contains(text(), "Id")]]');
       await idColumn.waitForClickable({ timeout: 5000, reverse: false });
       await idColumn.click();
@@ -55,7 +55,7 @@ describe('Week leaders sorting', async function () {
 
   context('Column "Name"', async function () {
 
-    it('Ascending order', async function () {
+    it(`Ascending order (browser — ${browser.capabilities.browserName})`, async function () {
       const idColumn = await $('//*[@role="columnheader" and .//*[contains(text(), "Name")]]');
       await idColumn.waitForClickable({ timeout: 5000, reverse: false });
       await idColumn.click();
@@ -72,7 +72,7 @@ describe('Week leaders sorting', async function () {
       expect(ids).toEqual(ascSortedIds);
     });
 
-    it('Descending order', async function () {
+    it(`Descending order (browser — ${browser.capabilities.browserName})`, async function () {
       const idColumn = await $('//*[@role="columnheader" and .//*[contains(text(), "Name")]]');
       await idColumn.waitForClickable({ timeout: 5000, reverse: false });
       await idColumn.click();
@@ -95,7 +95,7 @@ describe('Week leaders sorting', async function () {
 
   context('Column "Age"', async function () {
 
-    it('Ascending order', async function () {
+    it(`Ascending order (browser — ${browser.capabilities.browserName})`, async function () {
       const idColumn = await $('//*[@role="columnheader" and .//*[contains(text(), "Age")]]');
       await idColumn.waitForClickable({ timeout: 5000, reverse: false });
       await idColumn.click();
@@ -112,7 +112,7 @@ describe('Week leaders sorting', async function () {
       expect(ids).toEqual(ascSortedIds);
     });
 
-    it('Descending order', async function () {
+    it(`Descending order (browser — ${browser.capabilities.browserName})`, async function () {
       const idColumn = await $('//*[@role="columnheader" and .//*[contains(text(), "Age")]]');
       await idColumn.waitForClickable({ timeout: 5000, reverse: false });
       await idColumn.click();

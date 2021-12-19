@@ -1,8 +1,7 @@
 module.exports = async function enterSumToExchange(sumInput, digits, pseudoDatabase) {
   await sumInput.waitForDisplayed({ timeout: 3000, reverse: false });
-  await sumInput.click();
   for (let index in digits) {
-    await browser.keys(digits[index]);
+    await sumInput.addValue(digits[index]);
 
     await pseudoDatabase.waitUntil(async function () {
       let savedValue = await this.getHTML(false);

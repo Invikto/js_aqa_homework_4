@@ -12,7 +12,7 @@ describe('Currency exchange', async function () {
     await logOut();
   });
 
-  it('Purchase 1000', async function () {
+  it(`Purchase 1000 (browser — ${browser.capabilities.browserName})`, async function () {
     const testSum = 1000;
 
     const digits = testSum.toString().split('');
