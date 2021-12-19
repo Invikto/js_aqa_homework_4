@@ -12,25 +12,27 @@ describe('Currency exchange', async function () {
     await logOut();
   });
 
-  it(`Purchase 1000 (browser — ${browser.capabilities.browserName})`, async function () {
-    const testSum = 1000;
+  const testData = [1000];
 
-    const digits = testSum.toString().split('');
-    const sumInput = await $('#sum-to-buy');
-    const pseudoDatabase = await $('script#database');
-    await enterSumToExchange(sumInput, digits, pseudoDatabase);
+  for (testSum of testData) {
+    it(`Purchase ${testSum} (browser — ${browser.capabilities.browserName})`, async function () {
+      const digits = testSum.toString().split('');
+      const sumInput = await $('#sum-to-buy');
+      const pseudoDatabase = await $('script#database');
+      await enterSumToExchange(sumInput, digits, pseudoDatabase);
 
-    const buyButton = await $('//button[contains(text(), "Buy")]');
-    await buyButton.waitForDisplayed({ timeout: 3000, reverse: false });
-    await buyButton.click();
+      const buyButton = await $('//button[contains(text(), "Buy")]');
+      await buyButton.waitForDisplayed({ timeout: 3000, reverse: false });
+      await buyButton.click();
 
-    const currencyRate = await $('#currency-rate').getText();
-    const expectedResult = testSum * currencyRate;
-    let exchangeResult = await $('#withdrew');
-    await exchangeResult.scrollIntoView();
-    exchangeResult = await exchangeResult.getText();
-    exchangeResult = exchangeResult.substr(exchangeResult.indexOf('=>') + '=>'.length).trim();
-    expect(parseInt(exchangeResult)).toEqual(expectedResult);
-  });
+      const currencyRate = await $('#currency-rate').getText();
+      const expectedResult = testSum * currencyRate;
+      let exchangeResult = await $('#withdrew');
+      await exchangeResult.scrollIntoView();
+      exchangeResult = await exchangeResult.getText();
+      exchangeResult = exchangeResult.substr(exchangeResult.indexOf('=>') + '=>'.length).trim();
+      expect(parseInt(exchangeResult)).toEqual(expectedResult);
+    });
+  }
 
 });
